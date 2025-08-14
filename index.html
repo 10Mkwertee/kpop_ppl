@@ -15,10 +15,22 @@
         }
 
         body {
-            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
             color: #f1f1f1;
             min-height: 100vh;
             padding: 20px;
+        }
+
+        .bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #13293d;
+            background-image:
+                radial-gradient(at 47% 33%, hsl(180, 45%, 25%) 0, transparent 59%),
+                radial-gradient(at 82% 65%, hsl(263.21, 55%, 20%) 0, transparent 55%);
+            width: 100%;
+            height: 100%;
+            z-index: -10;
         }
 
         .container {
@@ -35,7 +47,7 @@
         h1 {
             font-size: 3.5rem;
             margin-bottom: 10px;
-            background: linear-gradient(45deg, #ff6b6b, #ffa8a8, #f8f9d2);
+            background: linear-gradient(45deg, #ffe16b, #a8ffe2, #d2f5f9);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -45,9 +57,9 @@
         .search-box {
             display: flex;
             align-items: center;
-            background: rgba(255, 255, 255, 0.12);
             border-radius: 30px;
             padding: 8px 15px;
+            box-shadow: 0px 0px 50px 5px rgba(255, 255, 255, 0.1);
         }
 
         .search-box i {
@@ -95,9 +107,10 @@
             text-align: center;
             min-width: 180px;
             flex: 1;
-            transition: transform 0.3s ease;
+            transition: all 0.3s ease-in-out;
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            /*! border: 1px solid rgba(255, 255, 255, 0.1); */
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
 
         .stat-card:hover {
@@ -108,7 +121,7 @@
         .stat-card i {
             font-size: 2.5rem;
             margin-bottom: 15px;
-            color: #ff6b6b;
+            color: #ffffff78;
         }
 
         .stat-card .number {
@@ -116,10 +129,7 @@
             line-height: 1;
             font-weight: bold;
             margin: 0;
-            background: linear-gradient(45deg, #ffa8a8, #f8f9d2);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            color: #ffffffb8;
         }
 
         .stat-card .label {
@@ -128,14 +138,16 @@
         }
 
         .table-container {
-            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px) saturate(160%);
+            -webkit-backdrop-filter: blur(15px) saturate(160%);
+            background-color: rgba(0, 0, 0, 0.3);
             border-radius: 15px;
             overflow: hidden;
             margin-top: 30px;
-            backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
             overflow-x: auto;
+            font-size: 0.9rem;
         }
 
         table {
@@ -145,13 +157,13 @@
         }
 
         th {
-            background: rgba(255, 107, 107, 0.15);
+            background: #3E92CC26;
             padding: 18px 15px;
             font-weight: 600;
             text-transform: uppercase;
-            font-size: 0.9rem;
+            font-size: 0.9em;
             letter-spacing: 0.5px;
-            color: #ffa8a8;
+            color: #3E92CC;
         }
 
         th:first-child {
@@ -189,7 +201,7 @@
         }
 
         rt {
-            font-size: 0.7em;
+            font-size: 0.75em;
             opacity: 0.7;
         }
 
@@ -214,7 +226,7 @@
             padding: 30px 0;
             color: rgba(255, 255, 255, 0.6);
             font-size: 0.9rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            /*! border-top: 1px solid rgba(255, 255, 255, 0.1); */
             margin-top: 20px;
         }
 
@@ -243,6 +255,10 @@
         }
 
         @media (max-width: 768px) {
+            html {
+                font-size: 15px;
+            }
+
             h1 {
                 font-size: 2.5rem;
             }
@@ -255,6 +271,7 @@
 </head>
 
 <body>
+    <div class="bg"></div>
     <div class="container">
         <header>
             <h1>K-pop Groups I Follow</h1>
@@ -298,6 +315,7 @@
                         <th>Han-T</th>
                         <th>Nationality</th>
                         <th>Birthday</th>
+                        <th>Age</th>
                         <th>Height</th>
                         <th>Weight</th>
                         <th>Company</th>
@@ -310,73 +328,66 @@
         </div>
 
         <footer>
-            <p>Public information from the Internet. Groups and members in no particular preference. Inaccuracies may be present.</p>
+            <p>Public information from the Internet. Groups and members in no particular preference. Inaccuracies may present.</p>
         </footer>
     </div>
 
     <script>
-        const groupImageType = {
-            "IVE": ".svg",
-            "i-dle": ".svg",
-            "UNIS": ".svg",
-            "BABYMONSTER": ".jpg",
-            "aespa": ".svg",
-            "Hearts2Hearts": ".png",
-            "VIVIZ": ".svg",
-            "ILLIT": ".svg",
-            "KiiiKiii": ".webp"
-        };
-
-        const companyImageType = {
-            "Starship Entertainment": ".jpg",
-            "CUBE Entertainment": ".png",
-            "F&F Entertainment": ".png",
-            "YG Entertainment": ".svg",
-            "SM Entertainment": ".svg",
-            "Big Planet Made": ".svg",
-            "HYBE Entertainment": ".svg"
-        };
-
         let currentSort = { column: null, order: null };
         let originalRows = [];
+        let imagesJson;
+        const currentDate = new Date();
+        const searchInput = document.getElementById('search-input');
+        const availableFields = ['group', 'stage', 'romanisation', 'hant', 'native', 'nationality', 'bday', 'cm', 'kg', 'under'];
+
+        async function loadImagesJson() {
+            try {
+                const response = await fetch('data/images.json');
+                if (!response.ok) throw new Error(`Failed to load images.json`);
+                imagesJson = await response.json();
+            } catch (error) {
+                console.error('Error loading JSON:', error);
+            }
+        }
 
         function csvToJson(csv) {
             const rows = csv.split('\n');
             const headers = rows[0].split(',');
 
-            const jsonArray = rows.slice(1).map(row => {
+            return rows.slice(1).map(row => {
                 const values = row.split(',');
                 const jsonObject = {};
-
                 headers.forEach((header, index) => {
                     jsonObject[header.trim()] = values[index]?.trim();
                 });
-
                 return jsonObject;
             });
-
-            return jsonArray;
         }
 
-        async function loadMemberData() {
+        async function loadCsvData(fileName) {
             try {
-                const url = 'data.csv';
+                const url = 'data/' + fileName + '.csv';
                 const response = await fetch(url);
-                if (!response.ok) {
-                    throw new Error(`Failed to fetch CSV: ${response.statusText}`);
-                }
-
+                if (!response.ok) throw new Error(`Failed to fetch CSV: ${response.statusText}`);
                 const csvText = await response.text();
-
-                await new Promise(resolve => setTimeout(resolve, 1500));
-
-                const jsonData = csvToJson(csvText);
-
-                return jsonData;
+                return csvToJson(csvText);
             } catch (error) {
-                console.error("Error loading member data:", error);
+                console.error("Error loading data:", error);
                 return [];
             }
+        }
+
+        function calcAge(bday) {
+            let age = currentDate.getFullYear() - bday.getFullYear();
+
+            const monthDifference = currentDate.getMonth() - bday.getMonth();
+            const dayDifference = currentDate.getDate() - bday.getDate();
+
+            if (monthDifference < 0 || (monthDifference === 0 && dayDifference < 0)) {
+                age--;
+            }
+
+            return age;
         }
 
         function populateTable(members) {
@@ -390,24 +401,24 @@
                     romanisation = '<span style="font-size: 0.8em">' + member.native + '</span>';
                 }
 
+                bday = new Date(member.bday);
 
                 const row = `<tr>
-                    <td>
-                        <div style="--logo-url: url('images/group/${member.group}${groupImageType[member.group]}')" class="image"></div>
-                        <!-- <span>${member.group}</span> -->
-                    </td>
-                    <td>${member.stage}</td>
-                    <td>${romanisation.replace('　', ' ')}</td>
-                    <td>${member.hant.replace('·', '・').replace('‧', '・').replace('　', ' ')}</td>
-                    <td><img src="images/flags/${member.nationality}.png" draggable="false" style="width: 3em; height: 3em;"></td>
-                    <td>${new Date(member.bday).toISOString().split('T')[0]}</td>
-                    <td>${member.cm}</td>
-                    <td>${member.kg}</td>
-                    <td>
-                        <div style="--logo-url: url('images/company/${member.under}${companyImageType[member.under]}')" class="image"></div>
-                        <!-- <span>${member.under}</span> -->
-                    </td>
-                </tr>`;
+            <td>
+                <div style="--logo-url: url('images/group/${member.group}.${imagesJson[member.group] || 'svg'}')" class="image"></div>
+            </td>
+            <td>${member.stage}</td>
+            <td>${romanisation.replace('　', ' ')}</td>
+            <td>${member.hant.replace('·', '・').replace('‧', '・').replace('　', ' ')}</td>
+            <td><img src="images/flags/${member.nationality}.png" draggable="false" style="width: 3em; height: 3em;"></td>
+            <td>${bday.toISOString().split('T')[0]}</td>
+            <td>${calcAge(bday)}</td>
+            <td>${member.cm}</td>
+            <td>${member.kg}</td>
+            <td>
+                <div style="--logo-url: url('images/company/${member.under}.${imagesJson[member.under] || 'svg'}')" class="image"></div>
+            </td>
+        </tr>`;
 
                 tableBody.innerHTML += row;
             });
@@ -430,6 +441,42 @@
             document.getElementById('avg-height').textContent = avgHeight;
         }
 
+        function parseAdvancedSearch(searchTerm) {
+            const [field, value] = searchTerm.split(':').map(part => part.trim());
+            if (!value || !field) return null;  // Invalid search if no field or value
+
+            return { field: field.toLowerCase(), value: value.toLowerCase() };
+        }
+
+        function filterMembersWithAdvancedSearch(members, searchTerm) {
+            const filter = parseAdvancedSearch(searchTerm);
+
+            if (filter) {
+                if (availableFields.includes(filter.field)) {
+                    return members.filter(member => {
+                        const memberValue = String(member[filter.field]).toLowerCase();
+                        return memberValue && memberValue.includes(filter.value);
+                    });
+                } else {
+                    searchInput.value = filter.value;
+                }
+            }
+
+            // Default to regular search if no valid advanced search term
+            return filterMembers(members, searchTerm);
+        }
+
+        function handleSearch() {
+            const searchTerm = searchInput.value.trim();
+
+            const filteredMembers = filterMembersWithAdvancedSearch(members, searchTerm);
+
+            populateTable(filteredMembers);
+            updateStats(filteredMembers);
+            resetTableToOriginalOrder();
+        }
+
+
         function filterMembers(members, searchTerm) {
             return members.filter(member => {
                 const matchesSearch = searchTerm === '' ||
@@ -442,9 +489,11 @@
         }
 
         async function init() {
+            await loadImagesJson();
+            const members = await loadCsvData('members');
+
             const loadingIndicator = document.getElementById('loading-indicator');
             const table = document.getElementById('members-table');
-            const members = await loadMemberData();
 
             loadingIndicator.style.display = 'none';
             table.style.display = 'table';
@@ -452,16 +501,17 @@
             populateTable(members);
             updateStats(members);
 
-            const searchInput = document.getElementById('search-input');
+            function handleSearch() {
+                const searchTerm = searchInput.value.trim();
 
-            function handleFilter() {
-                const filteredMembers = filterMembers(members, searchInput.value);
+                const filteredMembers = filterMembersWithAdvancedSearch(members, searchTerm);
 
                 populateTable(filteredMembers);
                 updateStats(filteredMembers);
+                resetTableToOriginalOrder();
             }
 
-            searchInput.addEventListener('input', handleFilter);
+            searchInput.addEventListener('input', handleSearch);
         }
 
         init();
