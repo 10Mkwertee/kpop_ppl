@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="zh-hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K-pop Groups I Follow</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', 'PingFang TC', 'PingFang SC', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            color: #f1f1f1;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 0;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #ff6b6b, #ffa8a8, #f8f9d2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.12);
+            border-radius: 30px;
+            padding: 8px 15px;
+        }
+
+        .search-box i {
+            color: #a8d0e6;
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        .search-box input {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1rem;
+            width: 100%;
+            outline: none;
+            padding: 5px 0;
+        }
+
+        .search-box input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        select {
+            background: rgba(255, 255, 255, 0.12);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 30px 0;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            min-width: 180px;
+            flex: 1;
+            transition: transform 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .stat-card i {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #ff6b6b;
+        }
+
+        .stat-card .number {
+            font-size: 2.2rem;
+            line-height: 1;
+            font-weight: bold;
+            margin: 0;
+            background: linear-gradient(45deg, #ffa8a8, #f8f9d2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .stat-card .label {
+            color: #a8d0e6;
+            font-size: 1rem;
+        }
+
+        .table-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            overflow: hidden;
+            margin-top: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+        }
+
+        th {
+            background: rgba(255, 107, 107, 0.15);
+            padding: 18px 15px;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            color: #ffa8a8;
+        }
+
+        th:first-child {
+            border-top-left-radius: 15px;
+        }
+
+        th:last-child {
+            border-top-right-radius: 15px;
+        }
+
+        td {
+            padding: 16px 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            white-space: nowrap;
+        }
+
+        tr {
+            transition: background 0.2s ease-in-out;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .sorted-asc::after {
+            content: " ▲";
+        }
+
+        .sorted-desc::after {
+            content: " ▼";
+        }
+
+        rt {
+            font-size: 0.7em;
+            opacity: 0.7;
+        }
+
+        rt:empty {
+            display: none;
+        }
+
+        .image {
+            display: inline-block;
+            width: 3em;
+            height: 3em;
+            background-image: var(--logo-url);
+            background-repeat: no-repeat;
+            background-position: center;
+            background-color: white;
+            border-radius: 0.5em;
+            background-size: 85%;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 20px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 1.2rem;
+            color: #a8d0e6;
+        }
+
+        .loading i {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            display: block;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .stat-card {
+                min-width: 140px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>K-pop Groups I Follow</h1>
+        </header>
+
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="search-input" placeholder="Search by anything...">
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <i class="fa fa-person"></i>
+                <div class="number" id="members-count">0</div>
+            </div>
+            <div class="stat-card">
+                <i class="fa fa-people-group"></i>
+                <div class="number" id="groups-count">0</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-building"></i>
+                <div class="number" id="companies-count">0</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-ruler"></i>
+                <div class="number" id="avg-height">0</div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <div class="loading" id="loading-indicator">
+                <i class="fas fa-spinner"></i>
+                Loading K-pop member data...
+            </div>
+            <table id="members-table" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Group</th>
+                        <th>Stage</th>
+                        <th>Native</th>
+                        <th>Han-T</th>
+                        <th>Nationality</th>
+                        <th>Birthday</th>
+                        <th>Height</th>
+                        <th>Weight</th>
+                        <th>Company</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                    <!-- Data will be populated dynamically -->
+                </tbody>
+            </table>
+        </div>
+
+        <footer>
+            <p>Public information from the Internet. Groups and members in no particular preference. Inaccuracies may be present.</p>
+        </footer>
+    </div>
+
+    <script>
+        const groupImageType = {
+            "IVE": ".svg",
+            "i-dle": ".svg",
+            "UNIS": ".svg",
+            "BABYMONSTER": ".jpg",
+            "aespa": ".svg",
+            "Hearts2Hearts": ".png",
+            "VIVIZ": ".svg",
+            "ILLIT": ".svg",
+            "KiiiKiii": ".webp"
+        };
+
+        const companyImageType = {
+            "Starship Entertainment": ".jpg",
+            "CUBE Entertainment": ".png",
+            "F&F Entertainment": ".png",
+            "YG Entertainment": ".svg",
+            "SM Entertainment": ".svg",
+            "Big Planet Made": ".svg",
+            "HYBE Entertainment": ".svg"
+        };
+
+        let currentSort = { column: null, order: null };
+        let originalRows = [];
+
+        function csvToJson(csv) {
+            const rows = csv.split('\n');
+            const headers = rows[0].split(',');
+
+            const jsonArray = rows.slice(1).map(row => {
+                const values = row.split(',');
+                const jsonObject = {};
+
+                headers.forEach((header, index) => {
+                    jsonObject[header.trim()] = values[index]?.trim();
+                });
+
+                return jsonObject;
+            });
+
+            return jsonArray;
+        }
+
+        async function loadMemberData() {
+            try {
+                const url = 'data.csv';
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch CSV: ${response.statusText}`);
+                }
+
+                const csvText = await response.text();
+
+                await new Promise(resolve => setTimeout(resolve, 1500));
+
+                const jsonData = csvToJson(csvText);
+
+                return jsonData;
+            } catch (error) {
+                console.error("Error loading member data:", error);
+                return [];
+            }
+        }
+
+        function populateTable(members) {
+            const tableBody = document.getElementById('table-body');
+            tableBody.innerHTML = '';
+
+            members.forEach(member => {
+                let romanisation = `<ruby>${member.native}<rt>${member.romanisation}</rt></ruby>`;
+
+                if (member.native === member.romanisation) {
+                    romanisation = '<span style="font-size: 0.8em">' + member.native + '</span>';
+                }
+
+
+                const row = `<tr>
+                    <td>
+                        <div style="--logo-url: url('images/group/${member.group}${groupImageType[member.group]}')" class="image"></div>
+                        <!-- <span>${member.group}</span> -->
+                    </td>
+                    <td>${member.stage}</td>
+                    <td>${romanisation.replace('　', ' ')}</td>
+                    <td>${member.hant.replace('·', '・').replace('‧', '・').replace('　', ' ')}</td>
+                    <td><img src="images/flags/${member.nationality}.png" draggable="false" style="width: 3em; height: 3em;"></td>
+                    <td>${new Date(member.bday).toISOString().split('T')[0]}</td>
+                    <td>${member.cm}</td>
+                    <td>${member.kg}</td>
+                    <td>
+                        <div style="--logo-url: url('images/company/${member.under}${companyImageType[member.under]}')" class="image"></div>
+                        <!-- <span>${member.under}</span> -->
+                    </td>
+                </tr>`;
+
+                tableBody.innerHTML += row;
+            });
+
+            originalRows = Array.from(document.getElementById("members-table").rows).slice(1);
+        }
+
+        function updateStats(members) {
+            document.getElementById('members-count').textContent = members.length;
+
+            const groups = new Set(members.map(m => m.group));
+            document.getElementById('groups-count').textContent = groups.size;
+
+            const companies = new Set(members.map(m => m.under));
+            document.getElementById('companies-count').textContent = companies.size;
+
+            const validHeights = members.filter(m => typeof m.cm === 'number');
+            const totalHeight = members.reduce((sum, m) => sum + parseInt(m.cm), 0);
+            const avgHeight = (totalHeight / members.length).toFixed(1);
+            document.getElementById('avg-height').textContent = avgHeight;
+        }
+
+        function filterMembers(members, searchTerm) {
+            return members.filter(member => {
+                const matchesSearch = searchTerm === '' ||
+                    Object.values(member).some(value =>
+                        String(value).toLowerCase().includes(searchTerm.toLowerCase())
+                    );
+
+                return matchesSearch;
+            });
+        }
+
+        async function init() {
+            const loadingIndicator = document.getElementById('loading-indicator');
+            const table = document.getElementById('members-table');
+            const members = await loadMemberData();
+
+            loadingIndicator.style.display = 'none';
+            table.style.display = 'table';
+
+            populateTable(members);
+            updateStats(members);
+
+            const searchInput = document.getElementById('search-input');
+
+            function handleFilter() {
+                const filteredMembers = filterMembers(members, searchInput.value);
+
+                populateTable(filteredMembers);
+                updateStats(filteredMembers);
+            }
+
+            searchInput.addEventListener('input', handleFilter);
+        }
+
+        init();
+
+        const headers = document.querySelectorAll("th");
+
+        function sortTable(columnIndex, order) {
+            const table = document.querySelector('tbody');
+            const rows = Array.from(table.rows);
+
+            rows.sort((rowA, rowB) => {
+                const cellA = rowA.cells[columnIndex].innerText;
+                const cellB = rowB.cells[columnIndex].innerText;
+
+                if (order === 'asc') {
+                    return cellA > cellB ? 1 : (cellA < cellB ? -1 : 0);
+                } else if (order === 'desc') {
+                    return cellA < cellB ? 1 : (cellA > cellB ? -1 : 0);
+                }
+                return 0;
+            });
+
+            rows.forEach(row => table.appendChild(row));
+        }
+
+        function updateSortIndicators() {
+            headers.forEach(header => header.classList.remove('sorted-asc', 'sorted-desc'));
+
+            if (currentSort.order === 'asc') {
+                headers[currentSort.column].classList.add('sorted-asc');
+            } else if (currentSort.order === 'desc') {
+                headers[currentSort.column].classList.add('sorted-desc');
+            }
+        }
+
+        headers.forEach((header, index) => {
+            header.addEventListener('click', () => {
+                if (currentSort.column === index) {
+                    if (currentSort.order === 'asc') {
+                        currentSort.order = 'desc';
+                        sortTable(index, 'desc');
+                    } else if (currentSort.order === 'desc') {
+                        currentSort.order = null;
+                        resetTableToOriginalOrder();
+                    } else {
+                        currentSort.order = 'asc';
+                        sortTable(index, 'asc');
+                    }
+                } else {
+                    currentSort.column = index;
+                    currentSort.order = 'asc';
+                    sortTable(index, 'asc');
+                }
+
+                updateSortIndicators();
+            });
+        });
+
+        function resetTableToOriginalOrder() {
+            const table = document.querySelector('tbody');
+            originalRows.forEach(row => table.appendChild(row));
+            currentSort.order = null;
+            updateSortIndicators();
+        }
+    </script>
+</body>
+
+</html>
