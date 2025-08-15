@@ -351,7 +351,7 @@
         }
 
         function csvToJson(csv) {
-            const rows = csv.split('\n');
+            const rows = csv.trim().split('\n');
             const headers = rows[0].split(',');
 
             return rows.slice(1).map(row => {
@@ -409,7 +409,7 @@
             </td>
             <td>${member.stage}</td>
             <td>${romanisation.replace('　', ' ')}</td>
-            <td>${member.hant.replace('·', '・').replace('‧', '・').replace('　', ' ')}</td>
+            <td>${member.hant.replace('·', '・').replace('‧', '・')}</td>
             <td><img src="images/flags/${member.nationality}.png" draggable="false" style="width: 3em; height: 3em;"></td>
             <td>${bday.toISOString().split('T')[0]}</td>
             <td>${calcAge(bday)}</td>
